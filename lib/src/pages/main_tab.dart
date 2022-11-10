@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clone_instagram/src/common/image_data.dart';
 import 'package:flutter_clone_instagram/src/pages/bottom_nav_controller.dart';
+import 'package:flutter_clone_instagram/src/pages/home/home.dart';
 import 'package:get/get.dart';
 
-class Home extends GetView<BottomNavController> {
-  const Home({Key? key}) : super(key: key);
+class MainTab extends GetView<BottomNavController> {
+  const MainTab({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       child: Obx(() => Scaffold(
-            appBar: AppBar(),
             body: IndexedStack(index: controller.pageIndex.value, children: [
-              Container(child: Center(child: Text("HOME")), color: Colors.blue),
+              Home(),
               Container(child: Center(child: Text("SEARCH")), color: Colors.yellow),
               Container(child: Center(child: Text("UPLOAD")), color: Colors.green),
               Container(child: Center(child: Text("ACTIVITY")), color: Colors.orange),
@@ -34,16 +34,16 @@ class Home extends GetView<BottomNavController> {
                 BottomNavigationBarItem(
                   icon: ImageData(IconsPath.searchOff),
                   activeIcon: ImageData(IconsPath.searchOn),
-                  label: 'home',
+                  label: 'search',
                 ),
                 BottomNavigationBarItem(
                   icon: ImageData(IconsPath.uploadIcon),
-                  label: 'home',
+                  label: 'upload',
                 ),
                 BottomNavigationBarItem(
                   icon: ImageData(IconsPath.activeOff),
                   activeIcon: ImageData(IconsPath.activeOn),
-                  label: 'home',
+                  label: 'activity',
                 ),
                 BottomNavigationBarItem(
                   icon: Container(
@@ -54,13 +54,13 @@ class Home extends GetView<BottomNavController> {
                       color: Colors.grey,
                     ),
                   ),
-                  label: 'home',
+                  label: 'mypage',
                 ),
               ],
             ),
           )),
       onWillPop: () async {
-        return false;
+        return controller.willPopAction();
       },
     );
   }

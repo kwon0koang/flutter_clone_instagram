@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clone_instagram/src/binding/init_bindings.dart';
-import 'package:flutter_clone_instagram/src/pages/home.dart';
+import 'package:flutter_clone_instagram/src/pages/main_tab.dart';
 import 'package:get/get.dart';
 
 void main() {
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
           titleTextStyle: TextStyle(color: Colors.black)
         )
       ),
-      home: const Home(),
+      home: const MainTab(),
       initialBinding: InitBinding(),
     );
   }
