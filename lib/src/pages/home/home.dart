@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clone_instagram/src/common/avatar_widget.dart';
 import 'package:flutter_clone_instagram/src/common/image_data.dart';
+import 'package:flutter_clone_instagram/src/common/post_widget.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -27,7 +28,7 @@ class Home extends StatelessWidget {
       body: ListView(
         children: [
           _storyBoardList(),
-          // _postList(),
+          _postList(),
         ],
       ),
     );
@@ -43,7 +44,7 @@ class Home extends StatelessWidget {
         ...List.generate(
           100,
           (index) => AvatarWidget(
-            avatarType: AvatarType.TYPE1,
+            avatarType: AvatarType.NEW,
             thumbPath: "https://w.namu"
                 ""
                 ""
@@ -59,10 +60,9 @@ class Home extends StatelessWidget {
     return Stack(
       children: [
         AvatarWidget(
-          avatarType: AvatarType.TYPE2,
+          avatarType: AvatarType.DEFAULT,
           thumbPath: "https://static.wikia.nocookie"
               ".net/pokemon/images/7/7f/%EC%A7%80%EC%9A%B0%EC%9D%98_%EB%A6%AC%EC%9E%90%EB%AA%BD.png/revision/latest/scale-to-width-down/1200?cb=20190225082429&path-prefix=ko",
-          size: 70,
         ),
         Positioned(
           right: 2,
@@ -84,6 +84,15 @@ class Home extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _postList() {
+    return Column(
+      children: List.generate(
+        100,
+        (index) => PostWidget(),
+      ),
     );
   }
 }
