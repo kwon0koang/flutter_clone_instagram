@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_clone_instagram/src/pages/search/search_focus/search_focus.dart';
 import 'package:get/get.dart';
 
 class Search extends StatelessWidget {
@@ -26,24 +27,29 @@ class Search extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: Container(
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6),
-              color: Color(0xffefefef),
-            ),
-            child: Row(
-              children: [
-                Icon(Icons.search),
-                Text(
-                  "검색",
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Color(0xff838383),
-                  ),
-                )
-              ],
+          child: GestureDetector(
+            onTap: () {
+              Get.to(SearchFocus());
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(6),
+                color: Color(0xffefefef),
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.search),
+                  Text(
+                    "검색",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Color(0xff838383),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
