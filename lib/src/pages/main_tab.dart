@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_clone_instagram/src/common/image_data.dart';
 import 'package:flutter_clone_instagram/src/pages/bottom_nav_controller.dart';
 import 'package:flutter_clone_instagram/src/pages/home/home.dart';
+import 'package:flutter_clone_instagram/src/pages/search/search.dart';
 import 'package:get/get.dart';
 
 class MainTab extends GetView<BottomNavController> {
@@ -13,7 +14,7 @@ class MainTab extends GetView<BottomNavController> {
       child: Obx(() => Scaffold(
             body: IndexedStack(index: controller.pageIndex.value, children: [
               Home(),
-              Container(child: Center(child: Text("SEARCH")), color: Colors.yellow),
+              Search(),
               Container(child: Center(child: Text("UPLOAD")), color: Colors.green),
               Container(child: Center(child: Text("ACTIVITY")), color: Colors.orange),
               Container(child: Center(child: Text("MYPAGE")), color: Colors.purple),
