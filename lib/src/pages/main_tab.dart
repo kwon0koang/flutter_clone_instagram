@@ -12,13 +12,28 @@ class MainTab extends GetView<BottomNavController> {
   Widget build(BuildContext context) {
     return WillPopScope(
       child: Obx(() => Scaffold(
-            body: IndexedStack(index: controller.pageIndex.value, children: [
-              Home(),
-              Search(),
-              Container(child: Center(child: Text("UPLOAD")), color: Colors.green),
-              Container(child: Center(child: Text("ACTIVITY")), color: Colors.orange),
-              Container(child: Center(child: Text("MYPAGE")), color: Colors.purple),
-            ]),
+            body: IndexedStack(
+              index: controller.pageIndex.value,
+              children: [
+                Home(),
+                Search(),
+                Container(
+                    child: Center(
+                      child: Text("UPLOAD"),
+                    ),
+                    color: Colors.green),
+                Container(
+                    child: Center(
+                      child: Text("ACTIVITY"),
+                    ),
+                    color: Colors.orange),
+                Container(
+                    child: Center(
+                      child: Text("MYPAGE"),
+                    ),
+                    color: Colors.purple),
+              ],
+            ),
             bottomNavigationBar: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
               showSelectedLabels: false,

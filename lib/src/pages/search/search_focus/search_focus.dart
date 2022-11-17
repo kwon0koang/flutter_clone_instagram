@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clone_instagram/src/common/image_data.dart';
+import 'package:get/get.dart';
 
 enum SearchTabType {
   FAVORITE("인기"),
@@ -38,8 +39,11 @@ class _SearchFocusState extends State<SearchFocus>
         elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.all(18),
-          child: ImageData(
-            IconsPath.backBtnIcon,
+          child: GestureDetector(
+            onTap: Get.back,
+            child: ImageData(
+              IconsPath.backBtnIcon,
+            ),
           ),
         ),
         titleSpacing: 0,
