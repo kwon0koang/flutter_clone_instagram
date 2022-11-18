@@ -15,22 +15,21 @@ class Upload extends StatefulWidget {
 
 class _UploadState extends State<Upload> {
   var _albums = <AssetPathEntity>[];
-  var _albumTitle = "";
+  AssetPathEntity? _selectedAlbum;
 
-  var _imageList = <AssetEntity>[];
-
-  AssetEntity? _selectedImg;
+  var _photos = <AssetEntity>[];
+  AssetEntity? _selectedPhoto;
 
   @override
   void initState() {
     super.initState();
-    _loadAlbums();
+    _initAlbums();
   }
 
   /**
-   * 앨범 로드
+   * 앨범 초기화
    */
-  void _loadAlbums() async {
+  void _initAlbums() async {
     var result = await PhotoManager.requestPermissionExtend();
 
     // 권한 확인
@@ -49,17 +48,17 @@ class _UploadState extends State<Upload> {
       );
 
       // 앨범 사진 로드
-      _loadPhotos();
+      _loadPhotos(_albums.first);
     } else {
       // todo kyk 권한 요청
     }
   }
 
   /**
-   * 사진 로드
+   * 앨범 사진 로드
    */
-  void _loadPhotos() async {
-    _albumTitle = _albums.first.name;
+  void _loadPhotos(AssetPathEntity assetPathEntity) async {
+    _selectedAlbum = assetPathEntity;
 
     await _pagingPhotos();
 
@@ -70,11 +69,12 @@ class _UploadState extends State<Upload> {
    * 사진 페이징
    */
   Future<void> _pagingPhotos() async {
-    var photos = await _albums.first.getAssetListPaged(page: 0, size: 30);
+    var photos = await _selectedAlbum!.getAssetListPaged(page: 0, size: 30);
 
-    _imageList.addAll(photos);
+    _photos.clear();
+    _photos.addAll(photos);
 
-    _selectedImg = _imageList.first;
+    _selectedPhoto = _photos.first;
   }
 
   void _update() => setState(() {});
@@ -127,10 +127,10 @@ class _UploadState extends State<Upload> {
       width: width,
       height: width,
       color: Colors.grey,
-      child: _selectedImg == null
+      child: _selectedPhoto == null
           ? Container()
           : _selectedPhotoWidget(
-              _selectedImg!,
+              _selectedPhoto!,
               width.toInt(),
             ),
     );
@@ -149,7 +149,7 @@ class _UploadState extends State<Upload> {
             child: Row(
               children: [
                 Text(
-                  _albumTitle,
+                  _selectedAlbum == null ? "" : _selectedAlbum!.name,
                   style: TextStyle(fontSize: 15),
                 ),
                 Icon(Icons.arrow_drop_down),
@@ -222,10 +222,17 @@ class _UploadState extends State<Upload> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: List.generate(
                     _albums.length,
-                    (index) => Container(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                      child: Text(_albums[index].name),
+                    (index) => GestureDetector(
+                      onTap: () {
+                        _loadPhotos(_albums[index]);
+                        // Get.back;
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                        child: Text(_albums[index].name),
+                      ),
                     ),
                   ),
                 ),
@@ -249,9 +256,9 @@ class _UploadState extends State<Upload> {
         crossAxisSpacing: 1,
         mainAxisSpacing: 1,
       ),
-      itemCount: _imageList.length,
+      itemCount: _photos.length,
       itemBuilder: (context, index) {
-        var assetEntity = _imageList[index];
+        var assetEntity = _photos[index];
         return _photoWidget(assetEntity, 200);
       },
     );
@@ -268,11 +275,11 @@ class _UploadState extends State<Upload> {
         }
         return GestureDetector(
           onTap: () {
-            _selectedImg = assetEntity;
+            _selectedPhoto = assetEntity;
             _update();
           },
           child: Opacity(
-            opacity: assetEntity == _selectedImg ? 0.3 : 1,
+            opacity: assetEntity == _selectedPhoto ? 0.3 : 1,
             child: Image.memory(
               snapshot.data!,
               fit: BoxFit.cover,
