@@ -83,6 +83,7 @@ class _UploadState extends State<Upload> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         leading: GestureDetector(
           onTap: Get.back,
           child: Padding(
